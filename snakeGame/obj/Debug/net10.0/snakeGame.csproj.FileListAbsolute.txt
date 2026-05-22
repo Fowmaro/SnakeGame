@@ -12,3 +12,4 @@
 /home/maro/RiderProjects/snakeGame/snakeGame/obj/Debug/net10.0/snakeGame.pdb
 /home/maro/RiderProjects/snakeGame/snakeGame/obj/Debug/net10.0/snakeGame.genruntimeconfig.cache
 /home/maro/RiderProjects/snakeGame/snakeGame/obj/Debug/net10.0/ref/snakeGame.dll
+/home/maro/RiderProjects/snakeGame/snakeGame/obj/Debug/net10.0/snakeGame.sourcelink.json

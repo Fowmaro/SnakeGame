@@ -19,7 +19,7 @@ class Program
         int delayInMilli = 100;
         Random rnd = new Random();
         Directions direction = Directions.Up;
-        coordinates boxCoord = new coordinates(50, 15);
+        coordinates boxCoord = new coordinates(25, 15);
         coordinates snakePos = new coordinates(5, 10);
         coordinates apple = new coordinates(rnd.Next(1, boxCoord.X - 1), rnd.Next(1, boxCoord.Y - 1)); 
         DateTime time = DateTime.Now;
@@ -28,14 +28,15 @@ class Program
         while (true)
         {
             direction = GetInputDirection(direction);
-            if (direction == Directions.Up || direction == Directions.Down)
+            /*if (direction == Directions.Up || direction == Directions.Down)
             {
                 delayInMilli = 120;
             }
             else
             {
                 delayInMilli = 60;
-            }
+            }*/
+            delayInMilli = 100;
 
             if ((DateTime.Now - time).TotalMilliseconds >= delayInMilli)
             {
@@ -51,13 +52,13 @@ class Program
                         coordinates currentCoord = new coordinates(x, y);
                         if (snakePos.Equals(currentCoord))
                         {
-                            screenBuffer.Append("■");
+                            screenBuffer.Append("██");
                         }
                         else if (apple.Equals(currentCoord))
-                            screenBuffer.Append("@");
+                            screenBuffer.Append("🍏");
                         else if (x == 0 || y == 0 || x == boxCoord.X - 1 || y == boxCoord.Y - 1)
-                            screenBuffer.Append("#");
-                        else screenBuffer.Append(" ");
+                            screenBuffer.Append("##");
+                        else screenBuffer.Append("  ");
                     }
 
                     screenBuffer.AppendLine();
