@@ -14,11 +14,11 @@ class Program
          * change head direction ✔
          * head eats apple ✔
          * make the tail ✔
-         * make the death conditions
+         * make the death conditions ✔
          */
-        int delayInMilli = 100;
+        int delayInMilli = 150;
         Random rnd = new Random();
-        Directions direction = Directions.Up;
+        Directions direction = Directions.Right;
         coordinates boxCoord = new coordinates(25, 15);
         coordinates snakePos = new coordinates(5, 10);
         coordinates apple = new coordinates(rnd.Next(1, boxCoord.X - 1), rnd.Next(1, boxCoord.Y - 1)); 
@@ -37,16 +37,29 @@ class Program
             if ((DateTime.Now - time).TotalMilliseconds >= delayInMilli)
             {
                 snakePosHistory.Add(new coordinates(snakePos.X, snakePos.Y));
+                
                 if (snakePosHistory.Count > score)
                     snakePosHistory.RemoveAt(0);
-                
                 snakePos.ChangePos(direction);
+                
+                if (snakePos.X == 0 || snakePos.Y == 0 || snakePos.X == boxCoord.X-1 || snakePos.Y == boxCoord.Y-1
+                    || snakePosHistory.Any(c => c.X == snakePos.X && c.Y == snakePos.Y))
+                {
+                    score = 0;
+                    snakePos.ChangePos(5,10);
+                    snakePosHistory.Clear();
+                    direction = Directions.Right;
+                    apple.RandomPos(boxCoord,snakePosHistory);
+                    continue;
+                }
+                
+                
                 time = DateTime.Now;
                 Console.SetCursorPosition(0, 1);
                 screenBuffer.Clear();
                 if (snakePos.Equals(apple))
                 {
-                    apple.RandomPos(boxCoord);
+                    apple.RandomPos(boxCoord,snakePosHistory);
                     score++;
                 }
                 for (int y = 0; y < boxCoord.Y; y++)
@@ -69,7 +82,7 @@ class Program
 
               
                 
-                screenBuffer.Append(score);
+                screenBuffer.Append($"score: {score}");
                 Console.Write(screenBuffer.ToString());
             }
             

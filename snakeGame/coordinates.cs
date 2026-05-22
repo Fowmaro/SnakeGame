@@ -1,6 +1,6 @@
 namespace snakeGame;
 
-public class coordinates
+public struct coordinates
 {
     private int y { get; set; }
     private int x { get; set; }
@@ -45,8 +45,16 @@ public class coordinates
         }
     }
     Random rnd = new Random();
-    public void RandomPos(coordinates coordinates)
+
+    public void ChangePos(int x, int y)
     {
+        this.x = x;
+        this.y = y;
+    }
+    // Needs updating
+    public void RandomPos(coordinates coordinates, List<coordinates> snakePosHistory)
+    {
+        
         this.x = rnd.Next(1, coordinates.X - 1);
         this.y = rnd.Next(1, coordinates.Y - 1);
     }
