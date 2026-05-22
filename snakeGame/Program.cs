@@ -12,8 +12,8 @@ class Program
          * make the apple in random dimension ✔
          * make the head move ✔
          * change head direction ✔
-         * head eats apple
-         * make the tail
+         * head eats apple ✔
+         * make the tail ✔
          * make the death conditions
          */
         int delayInMilli = 100;
@@ -25,36 +25,39 @@ class Program
         DateTime time = DateTime.Now;
         Console.CursorVisible = false;
         StringBuilder screenBuffer = new StringBuilder();
+        int score = 0;
+        List<coordinates> snakePosHistory = new List<coordinates>();
+        
+        
         while (true)
         {
             direction = GetInputDirection(direction);
-            /*if (direction == Directions.Up || direction == Directions.Down)
-            {
-                delayInMilli = 120;
-            }
-            else
-            {
-                delayInMilli = 60;
-            }*/
             delayInMilli = 100;
 
             if ((DateTime.Now - time).TotalMilliseconds >= delayInMilli)
             {
+                snakePosHistory.Add(new coordinates(snakePos.X, snakePos.Y));
+                if (snakePosHistory.Count > score)
+                    snakePosHistory.RemoveAt(0);
+                
                 snakePos.ChangePos(direction);
                 time = DateTime.Now;
                 Console.SetCursorPosition(0, 1);
                 screenBuffer.Clear();
-                
+                if (snakePos.Equals(apple))
+                {
+                    apple.RandomPos(boxCoord);
+                    score++;
+                }
                 for (int y = 0; y < boxCoord.Y; y++)
                 {
                     for (int x = 0; x < boxCoord.X; x++)
                     {
-                        coordinates currentCoord = new coordinates(x, y);
-                        if (snakePos.Equals(currentCoord))
+                        if ((snakePos.X == x && snakePos.Y == y) || snakePosHistory.Any(c => c.X == x && c.Y == y))
                         {
                             screenBuffer.Append("██");
                         }
-                        else if (apple.Equals(currentCoord))
+                        else if (apple.X == x && apple.Y == y)
                             screenBuffer.Append("🍏");
                         else if (x == 0 || y == 0 || x == boxCoord.X - 1 || y == boxCoord.Y - 1)
                             screenBuffer.Append("##");
@@ -63,9 +66,14 @@ class Program
 
                     screenBuffer.AppendLine();
                 }
+
+              
+                
+                screenBuffer.Append(score);
                 Console.Write(screenBuffer.ToString());
             }
-            System.Threading.Thread.Sleep(1);
+            
+            System.Threading.Thread.Sleep(2);
         }
 
     }

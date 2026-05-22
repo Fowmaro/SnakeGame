@@ -44,6 +44,11 @@ public class coordinates
                 break;
         }
     }
-    
+    Random rnd = new Random();
+    public void RandomPos(coordinates coordinates)
+    {
+        this.x = rnd.Next(1, coordinates.X - 1);
+        this.y = rnd.Next(1, coordinates.Y - 1);
+    }
 
 }
