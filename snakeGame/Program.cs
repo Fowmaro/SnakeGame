@@ -16,11 +16,12 @@ class Program
          * make the tail ✔
          * make the death conditions ✔
          */
-        int delayInMilli = 150;
+        int delayInMilli = 130;
         Random rnd = new Random();
         Directions direction = Directions.Right;
-        coordinates boxCoord = new coordinates(25, 15);
-        coordinates snakePos = new coordinates(5, 10);
+        Directions lastMovedDirection = Directions.Right;
+        coordinates boxCoord = new coordinates(25, 16);
+        coordinates snakePos = new coordinates(6, 8);
         coordinates apple = new coordinates(rnd.Next(1, boxCoord.X - 1), rnd.Next(1, boxCoord.Y - 1)); 
         DateTime time = DateTime.Now;
         Console.CursorVisible = false;
@@ -31,8 +32,8 @@ class Program
         
         while (true)
         {
-            direction = GetInputDirection(direction);
-            delayInMilli = 100;
+            direction = GetInputDirection(direction,lastMovedDirection);
+            
 
             if ((DateTime.Now - time).TotalMilliseconds >= delayInMilli)
             {
@@ -41,12 +42,13 @@ class Program
                 if (snakePosHistory.Count > score)
                     snakePosHistory.RemoveAt(0);
                 snakePos.ChangePos(direction);
+                lastMovedDirection = direction;
                 
                 if (snakePos.X == 0 || snakePos.Y == 0 || snakePos.X == boxCoord.X-1 || snakePos.Y == boxCoord.Y-1
                     || snakePosHistory.Any(c => c.X == snakePos.X && c.Y == snakePos.Y))
                 {
                     score = 0;
-                    snakePos.ChangePos(5,10);
+                    snakePos.ChangePos(6,8);
                     snakePosHistory.Clear();
                     direction = Directions.Right;
                     apple.RandomPos(boxCoord,snakePosHistory);
@@ -73,7 +75,7 @@ class Program
                         else if (apple.X == x && apple.Y == y)
                             screenBuffer.Append("🍏");
                         else if (x == 0 || y == 0 || x == boxCoord.X - 1 || y == boxCoord.Y - 1)
-                            screenBuffer.Append("##");
+                            screenBuffer.Append("▓▓");
                         else screenBuffer.Append("  ");
                     }
 
@@ -90,7 +92,7 @@ class Program
         }
 
     }
-  static Directions GetInputDirection(Directions currentDirection)
+    static Directions GetInputDirection(Directions currentDirection, Directions lastMovedDirection)
     {
         while (Console.KeyAvailable)
         {
@@ -98,24 +100,24 @@ class Program
             switch (key)
             {
                 case ConsoleKey.UpArrow:
-                    if ((currentDirection != Directions.Down))
+                    if (lastMovedDirection != Directions.Down)
                         currentDirection = Directions.Up;
-                    
                     break;
+                
                 case ConsoleKey.DownArrow:
-                    if ((currentDirection != Directions.Up))
+                    if (lastMovedDirection != Directions.Up)
                         currentDirection = Directions.Down;
-                    
                     break;
+                
                 case ConsoleKey.RightArrow:
-                    if (currentDirection != Directions.Left)
+                    if (lastMovedDirection != Directions.Left)
                         currentDirection = Directions.Right;
                     break;
+                
                 case ConsoleKey.LeftArrow:
-                    if (currentDirection != Directions.Right)
+                    if (lastMovedDirection != Directions.Right)
                         currentDirection = Directions.Left;
                     break;
-            
             }
         }
         return currentDirection;
