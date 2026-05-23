@@ -2,8 +2,10 @@ namespace snakeGame;
 
 public static class InputHandler
 {
-    public static Directions GetInputDirection(Directions currentDirection, Directions lastMovedDirection)
+    
+    public static Directions GetInputDirection(Directions currentDirection)
     {
+        Directions lastMovedDirection =  currentDirection;
         while (Console.KeyAvailable)
         {
             ConsoleKey key = Console.ReadKey(true).Key;

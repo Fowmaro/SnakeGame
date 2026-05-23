@@ -18,7 +18,7 @@ public class Snake
 
     public void Move(Directions inputDirection)
     {
-
+        CurrentDirection = inputDirection;
         SnakeHead = CurrentDirection switch
         {
             Directions.Up => new Coords(SnakeHead.X, SnakeHead.Y - 1),
@@ -38,13 +38,11 @@ public class Snake
 
     public void Grow()
     {
-        
         Length++;
     }
 
     public bool HasEatenItsTale()
     {
-        
         return SnakePosHistory.Count(c => c.X == SnakeHead.X && c.Y == SnakeHead.Y) > 1;
     }
 

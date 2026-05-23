@@ -1,5 +1,4 @@
-﻿using System.Text;
-
+﻿
 namespace snakeGame;
 
 class Program
@@ -8,7 +7,7 @@ class Program
     {
         int width = 25;
         int height = 16;
-      int delayInMilli = 130;
+      int delayInMilli = 100;
 
       Engine engine = new Engine(width, height);
       Render renderer = new Render();
@@ -17,7 +16,7 @@ class Program
 
       while (true)
       {
-          currentInput = InputHandler.GetInputDirection(currentInput,);
+          currentInput = InputHandler.GetInputDirection(currentInput);
 
           engine.Update(currentInput);
 
@@ -31,6 +30,7 @@ class Program
       
               engine.Reset();
               currentInput = Directions.Right;
+              Console.Clear();
           }
 
           await Task.Delay(delayInMilli);

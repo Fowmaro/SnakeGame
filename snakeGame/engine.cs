@@ -28,7 +28,7 @@ public class Engine
         if (CheckWallCollision() || Snake.HasEatenItsTale())
         {
             IsGameOver = true;
-            OnGameOver?.Invoke(); // Fire the death event!
+            OnGameOver?.Invoke(); 
             return;
         }
 
@@ -42,14 +42,16 @@ public class Engine
         }
     }
     
-    
+    //done
     public void Reset()
     {
         Snake = new Snake(new Coords(MaxX / 2, MaxY / 2));
         Score = 0;
+        IsGameOver = false;
         SpawnApple();
     }
 
+    // Done!
     private void SpawnApple()
     {
         Coords newApplePos;
@@ -57,7 +59,7 @@ public class Engine
         do
         {
             newApplePos = new Coords(
-                _random.Next(1, MaxX - 1), 
+                _random.Next(1, MaxX - 1),
                 _random.Next(1, MaxY - 1)
             );
         } 
@@ -66,6 +68,7 @@ public class Engine
         ApplePos = newApplePos;
     }
     
+    // Done!
     private bool CheckWallCollision()
     {
         var head = Snake.SnakeHead;
