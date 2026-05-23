@@ -11,6 +11,16 @@ class Program
 
       Engine engine = new Engine(width, height);
       Render renderer = new Render();
+      
+      engine.OnAppleEaten += () => 
+      {
+          Console.Write("\a"); 
+      };
+
+      engine.OnGameOver += () => 
+      {
+          Console.Write("\a\a\a");
+      };
 
       Directions currentInput = Directions.Right;
 
