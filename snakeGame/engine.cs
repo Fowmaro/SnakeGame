@@ -7,8 +7,10 @@ public class Engine
     public int MaxX { get; set; }
     public int MaxY { get; set; }
     public int Score { get; set; }
+    public bool IsGameOver { get; private set; }
     
     public event Action OnAppleEaten;
+    public event Action OnGameOver;
     
     private readonly Random _random = new Random();
     
@@ -25,7 +27,7 @@ public class Engine
 
         if (CheckWallCollision() || Snake.HasEatenItsTale())
         {
-           
+            IsGameOver = true;
             OnGameOver?.Invoke(); // Fire the death event!
             return;
         }
