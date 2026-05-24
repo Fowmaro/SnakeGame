@@ -30,8 +30,6 @@ class Program
 
           engine.Update(currentInput);
 
-          renderer.Draw(engine);
-
           if (engine.IsGameOver)
           {
               Console.WriteLine("Press ENTER to restart...");
@@ -42,6 +40,8 @@ class Program
               currentInput = Directions.Right;
               Console.Clear();
           }
+          renderer.Draw(engine);
+
 
           await Task.Delay(delayInMilli);
       }
