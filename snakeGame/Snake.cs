@@ -43,7 +43,7 @@ public class Snake
 
     public bool HasEatenItsTale()
     {
-        return SnakePosHistory.Count(c => c.X == SnakeHead.X && c.Y == SnakeHead.Y) > 1;
+        return SnakePosHistory.Take(SnakePosHistory.Count - 1).Contains(SnakeHead);
     }
 
     
